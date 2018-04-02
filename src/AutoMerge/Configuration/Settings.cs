@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace AutoMerge
@@ -29,6 +29,9 @@ namespace AutoMerge
 
         private const string changesetCountKey = "changeset_count_show";
         private const int changesetCountDefault = 20;
+
+        private const string pathKey = "path";
+        private string pathDefault = string.Empty;
 
         static Settings()
         {
@@ -66,6 +69,11 @@ namespace AutoMerge
         public int ChangesetCount
         {
             get { return ChangesetCountGet(); }
+        }
+
+        public string Path
+        {
+            get { return PathGet(); }
         }
 
         private CommentFormat CommentFormatGet()
@@ -180,6 +188,17 @@ namespace AutoMerge
             }
 
             return changesetCount;
+        }
+
+        private string PathGet()
+        {
+            string path;
+            if (!_settingProvider.TryReadValue(pathKey, out path))
+            {
+                path = pathDefault;
+            }
+
+            return path;
         }
     }
 }
